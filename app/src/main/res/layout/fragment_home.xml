@@ -13,5 +13,33 @@
         android:background="@color/primary_500"
         tools:context=".ui.main.fragments.HomeFragment">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvScannedItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_20sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_commodity" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabBarCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:contentDescription="@string/app_name"
+            android:includeFontPadding="true"
+            android:text="@string/barcode_scanner"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/persian_orange_500"
+            app:icon="@drawable/ic_qr_code"
+            app:iconTint="@color/white" />
+
     </RelativeLayout>
 </layout>
