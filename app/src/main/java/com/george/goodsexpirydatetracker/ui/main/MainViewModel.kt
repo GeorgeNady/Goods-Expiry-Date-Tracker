@@ -1,4 +1,4 @@
-package com.george.goodsexpirydatetracker.ui.main.fragments
+package com.george.goodsexpirydatetracker.ui.main
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel

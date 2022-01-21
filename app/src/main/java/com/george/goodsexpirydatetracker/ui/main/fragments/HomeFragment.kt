@@ -9,6 +9,7 @@ import com.george.goodsexpirydatetracker.base.fragment.BaseFragment
 import com.george.goodsexpirydatetracker.base.fragment.FragmentsLayouts.HOME_FRAG
 import com.george.goodsexpirydatetracker.databinding.FragmentHomeBinding
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
+import com.george.goodsexpirydatetracker.ui.main.MainViewModel
 
 @ActivityFragmentAnnoation(HOME_FRAG)
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
