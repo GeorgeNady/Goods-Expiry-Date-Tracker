@@ -12,6 +12,47 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.fragments.BarCodeScannerFragment">
 
+        <com.budiyev.android.codescanner.CodeScannerView
+            android:id="@+id/codeScannerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            app:frameColor="@color/light_overlay"
+            app:frameCornersRadius="20dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvContext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_20sdp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#80FFFFFF"
+            app:cardCornerRadius="15dp"
+            tools:visibility="visible">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_20sdp">
+
+                    <TextView
+                        android:id="@+id/tvContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        tools:text="text"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+            </androidx.core.widget.NestedScrollView>
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 </layout>
