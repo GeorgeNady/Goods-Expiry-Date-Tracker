@@ -1,2 +1,3 @@
 rootProject.name = "Goods Expiry Date Tracker"
 include ':app'
+include ':code-scanner-master'
