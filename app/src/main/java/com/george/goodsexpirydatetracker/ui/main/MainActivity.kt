@@ -1,11 +1,18 @@
-package com.george.goodsexpirydatetracker
+package com.george.goodsexpirydatetracker.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import com.george.goodsexpirydatetracker.base.BaseActivity
+import com.george.goodsexpirydatetracker.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+class MainActivity : BaseActivity<ActivityMainBinding>(
+    ActivityMainBinding::inflate
+) {
+
+    override val TAG: String get() = this.javaClass.name
+
+    override fun beforeCreatingView() {}
+
+    override fun initialization() {}
+
+    override fun setListener() {}
+
 }
