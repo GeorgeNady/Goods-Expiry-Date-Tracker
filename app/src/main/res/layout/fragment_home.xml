@@ -28,7 +28,6 @@
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabBarCode"
-            android:transitionName="shared_element_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -39,9 +38,20 @@
             android:includeFontPadding="true"
             android:text="@string/barcode_scanner"
             android:textColor="@color/white"
+            android:transitionName="shared_element_container"
             app:backgroundTint="@color/persian_orange_500"
-            app:icon="@drawable/ic_qr_code"
+            app:icon="@drawable/ic_barcode"
             app:iconTint="@color/white" />
+
+       <ProgressBar
+           android:id="@+id/progressBar"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:indeterminateTint="@color/persian_orange_500"
+           android:visibility="gone"
+           tools:visibility="visible" />
+
 
     </RelativeLayout>
 </layout>

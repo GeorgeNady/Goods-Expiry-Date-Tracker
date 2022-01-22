@@ -33,14 +33,7 @@ class MainViewModel @ViewModelInject constructor(
     private val _allGoodsDescending = MutableLiveData<Resource<List<Commodity>>>()
     val goodsDescending: LiveData<Resource<List<Commodity>>> get() = _allGoodsDescending
 
-    fun getAllGoodsDescending() = viewModelScope.launch {
-        _allGoodsDescending.value = Resource.loading(null)
-        try {
-            _allGoodsDescending.value = Resource.success(repo.getGoodsSortedByDateASC().value!!)
-        } catch (e: Exception) {
-            _allGoodsDescending.value = Resource.failed(e.stackTraceToString())
-        }
-    }
+    fun getAllGoodsDescending()  = repo.getGoodsSortedByDateASC()
 
     fun insertCommodity(commodity: Commodity) : LiveData<Resource<Long>> {
         val liveData = MutableLiveData<Resource<Long>>()

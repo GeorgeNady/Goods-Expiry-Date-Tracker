@@ -1,6 +1,7 @@
 package com.george.goodsexpirydatetracker.ui.main.fragments
 
 import android.os.Build
+import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.george.goodsexpirydatetracker.R
@@ -29,20 +30,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 getAllItemsFromRemoteRepositories()
                 goodsRepo.observe(this@HomeFragment) { res ->
                     res.handler(
-                        loading = { showProgressDialog() },
-                        error = { dismissProgressDialog() },
-                        failed = { dismissProgressDialog() },
+                        loading = { showProgressBar() },
+                        error = { hideProgressBar() },
+                        failed = { hideProgressBar() },
                     ) {
-                        dismissProgressDialog()
-                        goodsList.addAll(res.data!!.goods)
-                        homeAdapter.submitList(goodsList)
+                        hideProgressBar()
+                        res.data!!.goods.forEach { commodity ->
+                            insertCommodity(commodity)
+                        }
+                        getAllGoodsDescending().observe(viewLifecycleOwner) { res ->
+                            homeAdapter.submitList(res)
+                        }
                     }
                 }
             }
-
-
-            // viewModel.getAllGoodsDescending()
-            // dataObserver()
         }
     }
 
@@ -63,25 +64,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    /*private fun dataObserver() {
-        viewModel.goodsDescending.observe(viewLifecycleOwner) { res ->
-            res.handler(
-                loading = {
-                    showProgressDialog()
-                },
-                error = {
-                    dismissProgressDialog()
-                },
-                failed = {
-                    dismissProgressDialog()
-                },
-            ) {
-                dismissProgressDialog()
-                homeAdapter.submitList(res.data)
-                Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }*/
+    /////////////////////////////////////////////////////////////////////////////// helper functions
+    private fun FragmentHomeBinding.showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun FragmentHomeBinding.hideProgressBar() {
+        progressBar.visibility = View.GONE
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////// RV
     private fun FragmentHomeBinding.setupRecyclerView() {

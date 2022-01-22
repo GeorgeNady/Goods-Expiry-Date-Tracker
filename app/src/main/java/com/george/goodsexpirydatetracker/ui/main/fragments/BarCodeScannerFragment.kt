@@ -14,8 +14,10 @@ import com.george.goodsexpirydatetracker.base.fragment.ActivityFragmentAnnoation
 import com.george.goodsexpirydatetracker.base.fragment.BaseFragment
 import com.george.goodsexpirydatetracker.base.fragment.FragmentsLayouts.BARCODE_FRAG
 import com.george.goodsexpirydatetracker.databinding.FragmentBarCodeBinding
+import com.george.goodsexpirydatetracker.models.Commodity
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
 import com.george.goodsexpirydatetracker.ui.main.MainViewModel
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,7 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
     private val viewModel: MainViewModel by lazy { (activity as MainActivity).viewModel }
     private lateinit var codeScanner: CodeScanner
     private var commodityId: Int = 0
+    // private lateinit var commodity: Commodity
 
     override fun initialization() {
         setupTransition()
@@ -70,14 +73,23 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
                 lifecycleScope.launchWhenCreated {
                     binding!!.apply {
                         cvContext.visibility = View.VISIBLE
-                        tvContent.text = it.text
-                        commodityId = it.text.toInt()
+
+                        try{
+                            commodityId = it.text.toInt()
+                            tvContent.text = it.text
+                            // commodity = Gson().fromJson(it.text,Commodity::class.java)
+
+                        } catch (e:Exception) {
+                            cvContext.visibility = View.GONE
+                            Toast.makeText(requireContext(), "this code not supported", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
 
             errorCallback = ErrorCallback {
                 lifecycleScope.launchWhenCreated {
+                    Toast.makeText(requireContext(), "error happened: ${it.stackTraceToString()}", Toast.LENGTH_SHORT).show()
                     Log.e(TAG, "codeScannerHandler: ${it.message}")
                 }
             }
