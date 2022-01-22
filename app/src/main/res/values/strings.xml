@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Goods Expiry Date Tracker</string>
+    <string name="please_wait">please wait</string>
+    <string name="ok">Ok</string>
+    <string name="no">No</string>
+    <string name="maybe">Maybe</string>
+    <string name="network_failure">network failure</string>
+    <string name="no_internet_connection">no internet connection</string>
+    <string name="connection_still_lost">connection still lost</string>
+    <string name="barcode_scanner">BarCode Scanner</string>
+    <string name="there_is_no_expired_item_to_display_in_this_list">There is no expired item to display in this list</string>
 </resources>

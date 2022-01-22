@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_500"
+        tools:context=".ui.main.fragments.HomeFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvScannedItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="?actionBarSize"
+            android:paddingBottom="@dimen/_80sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_commodity" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabBarCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:contentDescription="@string/app_name"
+            android:includeFontPadding="true"
+            android:text="@string/barcode_scanner"
+            android:textColor="@color/white"
+            android:transitionName="shared_element_container"
+            app:backgroundTint="@color/persian_orange_500"
+            app:icon="@drawable/ic_barcode"
+            app:iconTint="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/persian_orange_500"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/primary_500"
+            android:elevation="@dimen/_10sdp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:menu="@menu/menu" />
+
+    </RelativeLayout>
+</layout>

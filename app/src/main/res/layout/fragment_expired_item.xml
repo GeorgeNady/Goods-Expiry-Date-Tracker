@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_500"
+        tools:context=".ui.main.fragments.ExpiredItemsFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvExpiredItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_20sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_commodity" />
+
+        <RelativeLayout
+            android:id="@+id/emptyListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/head"
+                android:textAlignment="center"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/there_is_no_expired_item_to_display_in_this_list"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/persian_orange_500"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+</layout>

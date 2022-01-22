@@ -1,15 +1,62 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+
+    Properties props = new Properties()
+    props.load(project.file("local.properties").newDataInputStream())
+
+    ext {
+        kotlin_version = props.getProperty("kotlin_version", "")
+        activity_version = props.getProperty("activity_version", "")
+        app_compat_version = props.getProperty("app_compat_version", "")
+        constraint_layout_version = props.getProperty("constraint_layout_version", "")
+        core_testing_version = props.getProperty("core_testing_version", "")
+        coroutines = props.getProperty("coroutines", "")
+        rxj_version = props.getProperty("rxj_version", "")
+        retrofit2_version = props.getProperty("retrofit2_version", "")
+        arch_version = props.getProperty("arch_version", "")
+        lifecycle_version = props.getProperty("lifecycle_version", "")
+        room_version = props.getProperty("room_version", "")
+        nav_version = props.getProperty("nav_version", "")
+        paging_version =props.getProperty("paging_version", "")
+        coil_version = props.getProperty("coil_version", "")
+        glide_version = props.getProperty("glide_version", "")
+        sdp_version = props.getProperty("sdp_version", "")
+        material_spinner_version = props.getProperty("material_spinner_version", "")
+        lottie_version = props.getProperty("lottie_version", "")
+        shimmer_veriosn = props.getProperty("shimmer_veriosn", "")
+        material_version = props.getProperty("material_version", "")
+        segmant_button_version = props.getProperty("segmant_button_version", "")
+        roundedimageview = props.getProperty("roundedimageview", "")
+    }
+
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://jitpack.io"
+        }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
-
+        classpath("com.android.tools.build:gradle:7.0.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.28-alpha")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        //jcenter()
+        maven {
+            url "https://jitpack.io"
+        }
+        maven {
+            url "https://dl.bintray.com/google/mobile-ads-adapters-android/"
+        }
     }
 }
 
