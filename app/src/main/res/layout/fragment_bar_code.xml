@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            app:frameColor="@color/light_overlay"
+            app:maskColor="@color/primary_500_overlay"
+            app:frameColor="@color/persian_orange_500"
             app:frameCornersRadius="20dp" />
 
         <androidx.cardview.widget.CardView
