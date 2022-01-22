@@ -17,7 +17,6 @@ import com.george.goodsexpirydatetracker.databinding.FragmentBarCodeBinding
 import com.george.goodsexpirydatetracker.models.Commodity
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
 import com.george.goodsexpirydatetracker.ui.main.MainViewModel
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,8 +31,6 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
     override val TAG: String get() = this.javaClass.name
     private val viewModel: MainViewModel by lazy { (activity as MainActivity).viewModel }
     private lateinit var codeScanner: CodeScanner
-    private var commodityId: Int = 0
-    // private lateinit var commodity: Commodity
 
     override fun initialization() {
         setupTransition()
@@ -42,20 +39,6 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
     override fun setListener() {
         setupPermissions()
         codeScannerHandler()
-        binding!!.fabAdd.setOnClickListener {
-            viewModel.apply {
-                val commodity = goodsList.first { it.id == commodityId }
-                insertCommodity(commodity).observe(viewLifecycleOwner) { res ->
-                    res.handler(
-                        loading = {},
-                        error = {},
-                        failed = {},
-                    ) {
-                        findNavController().navigateUp()
-                    }
-                }
-            }
-        }
     }
 
     private fun codeScannerHandler() {
@@ -75,9 +58,8 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
                         cvContext.visibility = View.VISIBLE
 
                         try{
-                            commodityId = it.text.toInt()
                             tvContent.text = it.text
-                            // commodity = Gson().fromJson(it.text,Commodity::class.java)
+                            viewModel.addItemToTheDatabase(it.text.toInt())
 
                         } catch (e:Exception) {
                             cvContext.visibility = View.GONE
@@ -97,6 +79,24 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
 
         binding!!.codeScannerView.setOnClickListener {
             codeScanner.startPreview()
+        }
+    }
+
+    private fun MainViewModel.addItemToTheDatabase(commodityId: Int) {
+        Log.d(TAG, "setListener: ${remoteDataSource.value!!.data!!.goods}")
+        Log.d(TAG, "codeScannerHandler: $commodityId")
+        val commodity = remoteDataSource.value!!.data!!.goods.firstOrNull { it.id == commodityId }
+        try {
+            if (commodity == null) {
+                Toast.makeText(requireContext(), "this id doesn't belong to any item in the repository", Toast.LENGTH_SHORT).show()
+            } else {
+                insertCommodity(commodity)
+                Toast.makeText(requireContext(), "item added to the list", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+            }
+        } catch (e:Exception) {
+            Toast.makeText(requireContext(), "some error happened", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "addItemToTheDatabase: ${e.stackTraceToString()}")
         }
     }
 

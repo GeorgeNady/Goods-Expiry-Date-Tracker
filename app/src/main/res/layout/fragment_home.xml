@@ -20,8 +20,8 @@
             android:layout_centerInParent="true"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingTop="@dimen/_20sdp"
-            android:paddingBottom="@dimen/_60sdp"
+            android:paddingTop="?actionBarSize"
+            android:paddingBottom="@dimen/_80sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="4"
             tools:listitem="@layout/item_commodity" />
@@ -43,15 +43,26 @@
             app:icon="@drawable/ic_barcode"
             app:iconTint="@color/white" />
 
-       <ProgressBar
-           android:id="@+id/progressBar"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerInParent="true"
-           android:indeterminateTint="@color/persian_orange_500"
-           android:visibility="gone"
-           tools:visibility="visible" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/persian_orange_500"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/primary_500"
+            android:elevation="@dimen/_10sdp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:menu="@menu/menu" />
 
     </RelativeLayout>
 </layout>

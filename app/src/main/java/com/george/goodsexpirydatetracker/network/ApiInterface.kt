@@ -7,7 +7,7 @@ import retrofit2.http.*
 @Suppress("FunctionName")
 interface ApiInterface {
 
-    @GET("repository/commidity")
+    @GET("commidity")
     suspend fun getAllItemsFromRemoteRepositories(): Response<RepositoryResponse>
 
 }

@@ -12,7 +12,7 @@ class ApiClient {
 
     companion object {
 
-        private const val BASE_URL = "https://61eb3ca87ec58900177cdbe1.mockapi.io/api/v1/"
+        private const val BASE_URL = "https://61eb3ca87ec58900177cdbe1.mockapi.io/api/v1/repository/"
 
         private val retrofit by lazy {
 

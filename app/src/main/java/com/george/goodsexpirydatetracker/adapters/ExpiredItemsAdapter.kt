@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.george.goodsexpirydatetracker.databinding.ItemCommodityBinding
 import com.george.goodsexpirydatetracker.models.Commodity
+import com.george.goodsexpirydatetracker.ui.main.fragments.ExpiredItemsFragment
 import com.george.goodsexpirydatetracker.ui.main.fragments.HomeFragment
 import com.george.goodsexpirydatetracker.utiles.DateHelper
 
-class HomeAdapter(
-    val frag: HomeFragment
-) : ListAdapter<Commodity, HomeAdapter.HomeViewHolder>(CommodityComparator) {
+class ExpiredItemsAdapter(
+    val frag: ExpiredItemsFragment
+) : ListAdapter<Commodity, ExpiredItemsAdapter.HomeViewHolder>(CommodityComparator) {
 
     inner class HomeViewHolder(val binding: ItemCommodityBinding) :
         RecyclerView.ViewHolder(binding.root)
