@@ -1,9 +1,12 @@
 package com.george.goodsexpirydatetracker.ui.main.fragments
 
+import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.View
-import androidx.lifecycle.lifecycleScope
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.george.goodsexpirydatetracker.R
 import com.george.goodsexpirydatetracker.adapters.HomeAdapter
 import com.george.goodsexpirydatetracker.base.fragment.ActivityFragmentAnnoation
@@ -14,9 +17,6 @@ import com.george.goodsexpirydatetracker.models.Commodity
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
 import com.george.goodsexpirydatetracker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import java.util.*
 
 @AndroidEntryPoint
@@ -52,9 +52,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding!!.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 rvScannedItems.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-                    if (scrollY > oldScrollY) fabBarCode.shrink()
-                    else fabBarCode.extend()
+                    if (scrollY > oldScrollY) {
+                        fabBarCode.shrink()
+                        hideToolBar()
+                    }
+                    else {
+                        fabBarCode.extend()
+                        showToolBar()
+                    }
                 }
+
             }
 
             fabBarCode.setOnClickListener {
@@ -80,6 +87,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun FragmentHomeBinding.showProgressBar() { progressBar.visibility = View.VISIBLE }
 
     private fun FragmentHomeBinding.hideProgressBar() { progressBar.visibility = View.GONE }
+
+    private fun FragmentHomeBinding.showToolBar() {
+        toolbar.animate().translationY(0F).setDuration(50).start()
+    }
+
+    private fun FragmentHomeBinding.hideToolBar() {
+        val toolBarHeight = toolbar.height
+        toolbar.animate().translationY((-toolBarHeight).toFloat()).setDuration(50).start()
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////// RV
     private fun FragmentHomeBinding.setupRecyclerView() {

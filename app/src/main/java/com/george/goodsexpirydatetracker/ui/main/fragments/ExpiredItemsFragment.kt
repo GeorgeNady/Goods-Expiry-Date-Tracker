@@ -1,12 +1,11 @@
 package com.george.goodsexpirydatetracker.ui.main.fragments
 
+import android.view.View
 import com.george.goodsexpirydatetracker.adapters.ExpiredItemsAdapter
-import com.george.goodsexpirydatetracker.adapters.HomeAdapter
 import com.george.goodsexpirydatetracker.base.fragment.ActivityFragmentAnnoation
 import com.george.goodsexpirydatetracker.base.fragment.BaseFragment
 import com.george.goodsexpirydatetracker.base.fragment.FragmentsLayouts.EXPIRED_ITEMS_FRAG
 import com.george.goodsexpirydatetracker.databinding.FragmentExpiredItemBinding
-import com.george.goodsexpirydatetracker.databinding.FragmentHomeBinding
 import com.george.goodsexpirydatetracker.models.Commodity
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
 import com.george.goodsexpirydatetracker.ui.main.MainViewModel
@@ -37,6 +36,10 @@ class ExpiredItemsFragment : BaseFragment<FragmentExpiredItemBinding>() {
                     }
 
                     homeAdapter.submitList(notExpiredItems)
+
+                    if (notExpiredItems.isEmpty()) emptyListLayout.visibility = View.VISIBLE
+                    else emptyListLayout.visibility = View.GONE
+
                 }
             }
         }

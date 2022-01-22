@@ -1,18 +1,26 @@
 package com.george.goodsexpirydatetracker.ui.main
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.george.goodsexpirydatetracker.R
 import com.george.goodsexpirydatetracker.base.BaseActivity
 import com.george.goodsexpirydatetracker.databinding.ActivityMainBinding
+import com.george.goodsexpirydatetracker.utiles.AlarmReceiver
 import com.george.goodsexpirydatetracker.utiles.Constants.CHANNEL_DESCRIPTION
 import com.george.goodsexpirydatetracker.utiles.Constants.CHANNEL_ID
 import com.george.goodsexpirydatetracker.utiles.Constants.CHANNEL_NAME
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(
@@ -21,6 +29,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     override val TAG: String get() = this.javaClass.name
     val viewModel by viewModels<MainViewModel>()
+
+    lateinit var alarmManager: AlarmManager
+    lateinit var pendingIntent: PendingIntent
 
     override fun beforeCreatingView() {
         setTheme(R.style.GoodsExpiryDateTrackerTheme)
@@ -43,7 +54,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                     hideProgressBar()
                     runBlocking {
                         for (i in 0..3) {
-                            viewModel.insertCommodity(res.data!!.goods[i])
+                            val c = res.data!!.goods[i]
+                            viewModel.insertCommodity(c)
+                            val _6H = 21600000L
+                            val _12H = 43200000L
+                            val _18H = 64800000L
+                            val _24H = 86400000L
+                            setAlarmManager(c.expiryDate!!.toLong(),_6H)
                         }
                     }
                 }
@@ -51,13 +68,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////// foreground service
-    /*private fun sendCommandToService(action: String) {
-        Intent(this, GoodsServes::class.java).also {
-            it.action = action
-            startService(it)
-        }
-    }*/
+    private fun setAlarmManager(timeInMillis:Long,interval:Long) {
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this,AlarmReceiver::class.java)
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,timeInMillis,interval,pendingIntent)
+        Log.d(TAG, "setAlarmManager: alarm set")
+    }
 
     /////////////////////////////////////////////////////////////////////////////////// notification
     private fun createNotificationChannel() {
