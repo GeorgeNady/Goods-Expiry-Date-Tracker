@@ -13,7 +13,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     override val TAG: String get() = this.javaClass.name
     val viewModel by viewModels<MainViewModel>()
 
-    override fun beforeCreatingView() {}
+    override fun beforeCreatingView() {
+        setTheme(R.style.GoodsExpiryDateTrackerTheme)
+    }
 
     override fun initialization() {}
 

@@ -30,7 +30,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GoodsExpiryDateTracker">
+        android:theme="@style/splash_screen_theme">
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
