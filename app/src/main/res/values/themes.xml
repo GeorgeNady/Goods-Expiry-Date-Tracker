@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.GoodsExpiryDateTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="GoodsExpiryDateTrackerTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_500</item>
         <item name="colorPrimaryVariant">@color/primary_700</item>
@@ -58,6 +58,22 @@
         <item name="cornerSizeBottomLeft">@dimen/_25sdp</item>
         <item name="cornerSizeBottomRight">@dimen/_25sdp</item>
     </style>
+
+    <!-- ****************************************************** Splash screen -->
+    <style name="splash_screen_theme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:statusBarColor">@color/primary_500</item>
+        <item name="android:navigationBarColor">@color/primary_500</item>
+    </style>
+
+    <style name="splash_screen_theme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="splash_screen_theme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="splash_screen_theme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
