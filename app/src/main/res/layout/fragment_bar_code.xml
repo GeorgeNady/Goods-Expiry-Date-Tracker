@@ -8,6 +8,7 @@
     </data>
 
     <RelativeLayout
+        android:transitionName="shared_element_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.fragments.BarCodeScannerFragment">
@@ -35,21 +36,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_20sdp">
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginVertical="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="item id: "
+                        style="@style/paragraph" />
 
                     <TextView
                         android:id="@+id/tvContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         tools:text="text"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        style="@style/head" />
 
-                </RelativeLayout>
+                    <androidx.legacy.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabAdd"
+                        app:fabSize="mini"
+                        app:useCompatPadding="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add"
+                        android:contentDescription="@string/app_name" />
+
+
+                </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
         </androidx.cardview.widget.CardView>

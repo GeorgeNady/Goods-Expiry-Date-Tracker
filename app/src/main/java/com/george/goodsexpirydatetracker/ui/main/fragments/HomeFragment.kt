@@ -1,6 +1,7 @@
 package com.george.goodsexpirydatetracker.ui.main.fragments
 
 import android.os.Build
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.george.goodsexpirydatetracker.R
 import com.george.goodsexpirydatetracker.adapters.HomeAdapter
@@ -10,20 +11,38 @@ import com.george.goodsexpirydatetracker.base.fragment.FragmentsLayouts.HOME_FRA
 import com.george.goodsexpirydatetracker.databinding.FragmentHomeBinding
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
 import com.george.goodsexpirydatetracker.ui.main.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @ActivityFragmentAnnoation(HOME_FRAG)
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override val TAG: String get() = this.javaClass.name
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy { (activity as MainActivity).viewModel }
     private val homeAdapter by lazy { HomeAdapter(this) }
 
     override fun initialization() {
-        viewModel = (activity as MainActivity).viewModel
         binding!!.apply {
-            // init here
+            // initialization
             setupRecyclerView()
-            homeAdapter.submitList(viewModel.fake)
+            viewModel.apply {
+                getAllItemsFromRemoteRepositories()
+                goodsRepo.observe(this@HomeFragment) { res ->
+                    res.handler(
+                        loading = { showProgressDialog() },
+                        error = { dismissProgressDialog() },
+                        failed = { dismissProgressDialog() },
+                    ) {
+                        dismissProgressDialog()
+                        goodsList.addAll(res.data!!.goods)
+                        homeAdapter.submitList(goodsList)
+                    }
+                }
+            }
+
+
+            // viewModel.getAllGoodsDescending()
+            // dataObserver()
         }
     }
 
@@ -38,10 +57,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
 
             fabBarCode.setOnClickListener {
-                findNavController().navigate(R.id.barCodeScannerFragment, null, navOptions)
+//                val extras = FragmentNavigatorExtras(fabBarCode to "avatar_image")
+                findNavController().navigate(R.id.barCodeScannerFragment, null, null /*extras*/)
             }
         }
     }
+
+    /*private fun dataObserver() {
+        viewModel.goodsDescending.observe(viewLifecycleOwner) { res ->
+            res.handler(
+                loading = {
+                    showProgressDialog()
+                },
+                error = {
+                    dismissProgressDialog()
+                },
+                failed = {
+                    dismissProgressDialog()
+                },
+            ) {
+                dismissProgressDialog()
+                homeAdapter.submitList(res.data)
+                Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }*/
 
     ///////////////////////////////////////////////////////////////////////////////////////////// RV
     private fun FragmentHomeBinding.setupRecyclerView() {

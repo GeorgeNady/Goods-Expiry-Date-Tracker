@@ -24,14 +24,6 @@ import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import coil.request.ImageRequest
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.george.goodsexpirydatetracker.R
 import com.george.goodsexpirydatetracker.utiles.InternetConnection.hasInternetConnection
 import com.google.android.material.snackbar.Snackbar
@@ -39,7 +31,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
 
 
 abstract class BaseFragment<T : ViewDataBinding?> : Fragment() {
@@ -184,38 +175,38 @@ abstract class BaseFragment<T : ViewDataBinding?> : Fragment() {
     }
 
     /////////////////////////////////////////////////////////////////////////////////// GLIDE
-    private val factory = DrawableCrossFadeFactory.Builder()
-        .setCrossFadeEnabled(true)
-        .build()
-
-    val options = RequestOptions()
-        .centerCrop()
-        .format(DecodeFormat.PREFER_ARGB_8888)
-        .error(R.drawable.ic_launcher_foreground)
-        .useAnimationPool(true)
-        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        .priority(Priority.HIGH)
-
-    private fun glideInstance() =
-        Glide.with(requireActivity())
-            .applyDefaultRequestOptions(options)
-            .asBitmap()
-            .transition(BitmapTransitionOptions.withCrossFade(300))
-            .error(R.drawable.ic_launcher_foreground)
-
-
-    fun ImageView.glideLoader(url: String) = glideInstance().load(url).into(this)
-    fun ImageView.glideLoader(file: File) = glideInstance().load(file).into(this)
-    fun ImageView.glideLoader(drawable: Drawable) = glideInstance().load(drawable).into(this)
-    fun ImageView.glideLoader(bitmap: Bitmap) = glideInstance().load(bitmap).into(this)
+//    private val factory = DrawableCrossFadeFactory.Builder()
+//        .setCrossFadeEnabled(true)
+//        .build()
+//
+//    val options = RequestOptions()
+//        .centerCrop()
+//        .format(DecodeFormat.PREFER_ARGB_8888)
+//        .error(R.drawable.ic_launcher_foreground)
+//        .useAnimationPool(true)
+//        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+//        .priority(Priority.HIGH)
+//
+//    private fun glideInstance() =
+//        Glide.with(requireActivity())
+//            .applyDefaultRequestOptions(options)
+//            .asBitmap()
+//            .transition(BitmapTransitionOptions.withCrossFade(300))
+//            .error(R.drawable.ic_launcher_foreground)
+//
+//
+//    fun ImageView.glideLoader(url: String) = glideInstance().load(url).into(this)
+//    fun ImageView.glideLoader(file: File) = glideInstance().load(file).into(this)
+//    fun ImageView.glideLoader(drawable: Drawable) = glideInstance().load(drawable).into(this)
+//    fun ImageView.glideLoader(bitmap: Bitmap) = glideInstance().load(bitmap).into(this)
 
     //////////////////////////////////////////////////////////////////////////////////// COLI IMAGES
-    fun ImageRequest.Builder.coilImageBuilder() {
-        // scale(Scale.FILL)
-        // crossfade(true)
-        placeholder(R.drawable.ic_launcher_foreground)
-        //transformations(CircleCropTransformation())
-    }
+//    fun ImageRequest.Builder.coilImageBuilder() {
+//        // scale(Scale.FILL)
+//        // crossfade(true)
+//        placeholder(R.drawable.ic_launcher_foreground)
+//        //transformations(CircleCropTransformation())
+//    }
 
 
     ///////////////////////////////////////////////////////////////////////////// SWIPE REFRESH VIEW

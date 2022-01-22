@@ -3,6 +3,7 @@ package com.george.goodsexpirydatetracker.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.george.goodsexpirydatetracker.models.Commodity
+import com.george.goodsexpirydatetracker.utiles.Resource
 
 @Dao
 interface GoodsDao {

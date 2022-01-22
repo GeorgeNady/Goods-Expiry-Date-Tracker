@@ -7,18 +7,18 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
+import androidx.navigation.fragment.findNavController
+import com.budiyev.android.codescanner.*
 import com.george.goodsexpirydatetracker.base.BaseApplication.Companion.baseApplication
 import com.george.goodsexpirydatetracker.base.fragment.ActivityFragmentAnnoation
 import com.george.goodsexpirydatetracker.base.fragment.BaseFragment
 import com.george.goodsexpirydatetracker.base.fragment.FragmentsLayouts.BARCODE_FRAG
 import com.george.goodsexpirydatetracker.databinding.FragmentBarCodeBinding
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
+import com.george.goodsexpirydatetracker.ui.main.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @ActivityFragmentAnnoation(BARCODE_FRAG)
 class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
 
@@ -28,13 +28,31 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
     }
 
     override val TAG: String get() = this.javaClass.name
+    private val viewModel: MainViewModel by lazy { (activity as MainActivity).viewModel }
     private lateinit var codeScanner: CodeScanner
+    private var commodityId: Int = 0
 
-    override fun initialization() {}
+    override fun initialization() {
+        setupTransition()
+    }
 
     override fun setListener() {
         setupPermissions()
         codeScannerHandler()
+        binding!!.fabAdd.setOnClickListener {
+            viewModel.apply {
+                val commodity = goodsList.first { it.id == commodityId }
+                insertCommodity(commodity).observe(viewLifecycleOwner) { res ->
+                    res.handler(
+                        loading = {},
+                        error = {},
+                        failed = {},
+                    ) {
+                        findNavController().navigateUp()
+                    }
+                }
+            }
+        }
     }
 
     private fun codeScannerHandler() {
@@ -53,23 +71,15 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
                     binding!!.apply {
                         cvContext.visibility = View.VISIBLE
                         tvContent.text = it.text
+                        commodityId = it.text.toInt()
                     }
                 }
-//                runOnUiThread {
-//                    binding.apply {
-//                        cvContext.visibility = View.VISIBLE
-//                        tvContent.text = it.text
-//                    }
-//                }
             }
 
             errorCallback = ErrorCallback {
                 lifecycleScope.launchWhenCreated {
                     Log.e(TAG, "codeScannerHandler: ${it.message}")
                 }
-//                runOnUiThread {
-//                    Log.e(TAG, "codeScannerHandler: ${it.message}")
-//                }
             }
         }
 
@@ -79,7 +89,8 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
     }
 
     private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(baseApplication, android.Manifest.permission.CAMERA)
+        val permission =
+            ContextCompat.checkSelfPermission(baseApplication, android.Manifest.permission.CAMERA)
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             makeRequest()

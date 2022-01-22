@@ -21,12 +21,14 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingTop="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_60sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="4"
             tools:listitem="@layout/item_commodity" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabBarCode"
+            android:transitionName="shared_element_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
