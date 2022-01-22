@@ -6,7 +6,7 @@
 * Android Build Gradle tool version: 7.0.2 _with a distribution Url_ : `https\://services.gradle.org/distributions/gradle-7.0.2-bin.zip`
 * kotlin stable version: `1.5.20` 
 
-## dependencies used
+## Dependencies used
 
 * Coroutine
 * RxJava -- never used in this project
