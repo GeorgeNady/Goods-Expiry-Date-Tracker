@@ -17,16 +17,7 @@ buildscript {
         lifecycle_version = props.getProperty("lifecycle_version", "")
         room_version = props.getProperty("room_version", "")
         nav_version = props.getProperty("nav_version", "")
-        paging_version =props.getProperty("paging_version", "")
-        coil_version = props.getProperty("coil_version", "")
-        glide_version = props.getProperty("glide_version", "")
         sdp_version = props.getProperty("sdp_version", "")
-        material_spinner_version = props.getProperty("material_spinner_version", "")
-        lottie_version = props.getProperty("lottie_version", "")
-        shimmer_veriosn = props.getProperty("shimmer_veriosn", "")
-        material_version = props.getProperty("material_version", "")
-        segmant_button_version = props.getProperty("segmant_button_version", "")
-        roundedimageview = props.getProperty("roundedimageview", "")
     }
 
     repositories {

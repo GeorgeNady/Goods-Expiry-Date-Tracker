@@ -127,30 +127,8 @@ dependencies {
     // Code Scanner
     implementation project(path: ':code-scanner-master')
 
-    // ---------------------------------------------------------------------------------------------
-
-    // Coil
-    implementation("io.coil-kt:coil:$coil_version")
-
-    // Glide
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
-    implementation "com.github.bumptech.glide:okhttp3-integration:4.4.0"
-
     // SDP
     implementation("com.intuit.sdp:sdp-android:$sdp_version")
-
-    // Shimmer
-    implementation("com.facebook.shimmer:shimmer:$shimmer_veriosn")
-
-    // Material Spinner
-    implementation("com.jaredrummler:material-spinner:$material_spinner_version")
-
-    // Lottie
-    implementation("com.airbnb.android:lottie:$lottie_version")
-
-    //rounded image
-    implementation "com.makeramen:roundedimageview:$roundedimageview"
 
 
 }
