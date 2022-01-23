@@ -31,18 +31,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding!!.apply {
             setupRecyclerView()
             viewModel.apply {
-                getAllGoodsAscending().observe(viewLifecycleOwner) { res ->
-
-                    val notExpiredItems = mutableListOf<Commodity>()
-                    val currentDate = Date().time
-
-                    res.forEach { c ->
-                        if ((c.expiryDate!! * 1000) > currentDate) {
-                            notExpiredItems.add(c)
-                        }
-                    }
-
-                    homeAdapter.submitList(notExpiredItems)
+                getAllValidGoodsSortedByExpiryDateDescending().observe(viewLifecycleOwner) { res ->
+                    homeAdapter.submitList(res)
                 }
             }
         }

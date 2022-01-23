@@ -10,12 +10,11 @@ import com.george.goodsexpirydatetracker.models.RepositoryResponse
 import com.george.goodsexpirydatetracker.repositories.GoodsRepository
 import com.george.goodsexpirydatetracker.utiles.Resource
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MainViewModel @ViewModelInject constructor(
     private val repo: GoodsRepository
 ) : ViewModel() {
-
-     val allAvailableGoods = mutableListOf<Commodity>()
 
     private val _remoteDataSource = MutableLiveData<Resource<RepositoryResponse>>()
     val remoteDataSource: LiveData<Resource<RepositoryResponse>> get() = _remoteDataSource
@@ -38,10 +37,40 @@ class MainViewModel @ViewModelInject constructor(
         repo.deleteCommodity(commodity)
     }
 
-    fun getAllGoodsAscending()  = repo.getGoodsSortedByDateASC()
 
-    fun getAllGoodsDescending()  = repo.getGoodsSortedByDateDESC()
+    fun getAllGoodsDescending() = repo.getGoodsSortedByDateDESC()
 
+    /**
+     * # Returns Valid Goods from the local database
+     * */
+    fun getAllValidGoodsSortedByExpiryDateDescending() = repo.getAllValidGoodsSortedByExpiryDateDescending()
+    /*fun allValidGoodsDescending(): LiveData<MutableList<Commodity>> {
+        val data = getAllGoodsDescending().value
+        val resultSet = MutableLiveData<MutableList<Commodity>>()
+        val currentDate = Date().time
+        data?.let { list ->
+            list.forEach { c ->
+                if ((c.expiryDate!! * 1000) > currentDate) resultSet.value!!.add(c)
+            }
+        }
+        return resultSet
+    }*/
+
+    /**
+     * # Returns Expired Goods from the local database
+     * */
+    fun getAllExpiredGoodsSortedByExpiryDateDescending() = repo.getAllExpiredGoodsSortedByExpiryDateDescending()
+    /*fun allExpiredGoodsDescending(): LiveData<MutableList<Commodity>> {
+        val data = getAllGoodsDescending().value
+        val resultSet = MutableLiveData<MutableList<Commodity>>()
+        val currentDate = Date().time
+        data?.let { list ->
+            list.forEach { c ->
+                if ((c.expiryDate!! * 1000) < currentDate) resultSet.value!!.add(c)
+            }
+        }
+        return resultSet
+    }*/
 
 
 }

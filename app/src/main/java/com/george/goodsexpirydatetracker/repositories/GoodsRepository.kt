@@ -4,6 +4,7 @@ import com.george.goodsexpirydatetracker.network.BaseDataSource
 import com.george.goodsexpirydatetracker.db.GoodsDao
 import com.george.goodsexpirydatetracker.models.Commodity
 import com.george.goodsexpirydatetracker.network.ApiClient.Companion.api
+import java.util.*
 import javax.inject.Inject
 
 class GoodsRepository @Inject constructor(private val goodsDao: GoodsDao) : BaseDataSource() {
@@ -14,8 +15,15 @@ class GoodsRepository @Inject constructor(private val goodsDao: GoodsDao) : Base
 
     suspend fun deleteCommodity(commodity: Commodity) =  goodsDao.deleteCommodity(commodity)
 
-    fun getGoodsSortedByDateDESC() =  goodsDao.getGoodsSortedByDateDESC()
+    fun getGoodsSortedByDateDESC() =  goodsDao.getGoodsSortedByExpiryDateDescending()
 
-    fun getGoodsSortedByDateASC() = goodsDao.getGoodsSortedByDateASC()
+    fun getAllValidGoodsSortedByExpiryDateDescending(currentDate:Long = Date().time) =
+        goodsDao.getAllValidGoodsSortedByExpiryDateDescending(currentDate)
+
+    fun getAllExpiredGoodsSortedByExpiryDateDescending(currentDate:Long = Date().time) =
+        goodsDao.getAllExpiredGoodsSortedByExpiryDateDescending(currentDate)
+
+    // never used
+    // fun getGoodsSortedByDateASC() = goodsDao.getGoodsSortedByDateASC()
 
 }

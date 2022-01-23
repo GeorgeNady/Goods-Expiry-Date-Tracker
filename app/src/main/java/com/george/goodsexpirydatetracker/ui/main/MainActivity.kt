@@ -30,8 +30,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     override val TAG: String get() = this.javaClass.name
     val viewModel by viewModels<MainViewModel>()
 
-    lateinit var alarmManager: AlarmManager
-    lateinit var pendingIntent: PendingIntent
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
 
     override fun beforeCreatingView() {
         setTheme(R.style.GoodsExpiryDateTrackerTheme)
@@ -42,7 +42,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun setListener() {
-        // sendCommandToService(ACTION_START_OR_RESUME_SERVES)
         binding.apply {
             viewModel.getAllItemsFromRemoteDataSource()
             viewModel.remoteDataSource.observe(this@MainActivity) { res ->

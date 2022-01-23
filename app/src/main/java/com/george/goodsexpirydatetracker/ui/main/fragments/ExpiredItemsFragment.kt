@@ -24,22 +24,12 @@ class ExpiredItemsFragment : BaseFragment<FragmentExpiredItemBinding>() {
         binding!!.apply {
             setupRecyclerView()
             viewModel.apply {
-                getAllGoodsAscending().observe(viewLifecycleOwner) { res ->
-
-                    val notExpiredItems = mutableListOf<Commodity>()
-                    val currentDate = Date().time
-
-                    res.forEach { c ->
-                        if ((c.expiryDate!! * 1000) < currentDate) {
-                            notExpiredItems.add(c)
-                        }
+                getAllExpiredGoodsSortedByExpiryDateDescending().observe(viewLifecycleOwner) { res ->
+                    if (res.isEmpty()) emptyListLayout.visibility = View.VISIBLE
+                    else {
+                        emptyListLayout.visibility = View.GONE
+                        homeAdapter.submitList(res)
                     }
-
-                    homeAdapter.submitList(notExpiredItems)
-
-                    if (notExpiredItems.isEmpty()) emptyListLayout.visibility = View.VISIBLE
-                    else emptyListLayout.visibility = View.GONE
-
                 }
             }
         }
