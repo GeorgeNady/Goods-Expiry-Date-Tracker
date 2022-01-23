@@ -36,7 +36,9 @@
 
 I created a python script to generate some random items with a post request to the mockup api server
 you can find it out from this link 
-```https://github.com/GeorgeNady/Goods-Expiry-Date-Tracker-Fake-Data-Generator```
+```
+https://github.com/GeorgeNady/Goods-Expiry-Date-Tracker-Fake-Data-Generator
+```
 
 
 ---
