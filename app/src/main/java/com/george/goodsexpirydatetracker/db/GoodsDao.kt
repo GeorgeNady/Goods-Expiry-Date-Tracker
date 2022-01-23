@@ -3,8 +3,6 @@ package com.george.goodsexpirydatetracker.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.george.goodsexpirydatetracker.models.Commodity
-import com.george.goodsexpirydatetracker.utiles.Resource
-import java.util.*
 
 @Dao
 interface GoodsDao {
@@ -18,10 +16,10 @@ interface GoodsDao {
     @Query("SELECT * FROM commodity_table ORDER BY expiryDate DESC")
     fun getGoodsSortedByExpiryDateDescending(): LiveData<List<Commodity>>
 
-    @Query("SELECT * FROM commodity_table WHERE expiryDate * 1000 > :currentDate")
+    @Query("SELECT * FROM commodity_table WHERE expiryDate > :currentDate ORDER BY expiryDate DESC")
     fun getAllValidGoodsSortedByExpiryDateDescending(currentDate:Long) : LiveData<List<Commodity>>
 
-    @Query("SELECT * FROM commodity_table WHERE expiryDate * 1000 < :currentDate")
+    @Query("SELECT * FROM commodity_table WHERE expiryDate < :currentDate ORDER BY expiryDate DESC")
     fun getAllExpiredGoodsSortedByExpiryDateDescending(currentDate:Long) : LiveData<List<Commodity>>
 
     /**

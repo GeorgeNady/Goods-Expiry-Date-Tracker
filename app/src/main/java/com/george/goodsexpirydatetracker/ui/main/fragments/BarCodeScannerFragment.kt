@@ -106,7 +106,7 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
                 val _12H = 43200000L
                 val _18H = 64800000L
                 val _24H = 86400000L
-                setAlarmManager((commodity.expiryDate!! * 1000),_6H)
+                setAlarmManager(commodity.expiryDate!!,_6H)
                 findNavController().navigateUp()
             }
         } catch (e:Exception) {
