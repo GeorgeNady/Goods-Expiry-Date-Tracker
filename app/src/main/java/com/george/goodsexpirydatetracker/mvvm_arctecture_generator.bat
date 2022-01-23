@@ -20,6 +20,9 @@ mkdir di
 ECHO "creating models directory..."
 mkdir models
 
+ECHO "creating network directory..."
+mkdir network
+
 ECHO "creating repositories directory..."
 mkdir repositories
 
