@@ -5,6 +5,8 @@
 * Android studio / IDE version: [ Android Studio Arctic Fox | 2020.3.1 | Patch 2 ]
 * Android Build Gradle tool version: 7.0.2 _with a distribution Url_ : `https\://services.gradle.org/distributions/gradle-7.0.2-bin.zip`
 * kotlin stable version: `1.5.20` 
+---
+
 
 ## Dependencies used
 
@@ -20,6 +22,8 @@
 * Gson -- as json converter factory
 * Code Scanner -- for scanning [ BarCode, QrCode ]
 * SDP -- for handling responsive ui diminutions
+---
+
 
 ## How To Get Started
 
@@ -29,4 +33,9 @@
   ```
   https://www.getpostman.com/collections/29fc332f2bf204aad384
   ```
+---
+
+
+## Database test
+![Screenshot 2022-01-23 234051](https://user-images.githubusercontent.com/29967846/150698992-6d53c576-6f62-4c2a-a68a-5d83341eb650.png)
 
