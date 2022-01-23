@@ -38,4 +38,9 @@
 
 ## Database test
 ![Screenshot 2022-01-23 234051](https://user-images.githubusercontent.com/29967846/150698992-6d53c576-6f62-4c2a-a68a-5d83341eb650.png)
+---
 
+
+## Fake Data
+I created a python script to generate some random items with a post request to the mockup api server
+you can find it out from this link https://github.com/GeorgeNady/Goods-Expiry-Date-Tracker-Fake-Data-Generator
