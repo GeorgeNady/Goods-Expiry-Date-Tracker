@@ -59,7 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                             val _12H = 43200000L
                             val _18H = 64800000L
                             val _24H = 86400000L
-                            setAlarmManager(c.expiryDate!!.toLong(),_6H)
+                            setAlarmManager((c.expiryDate!! * 1000),_6H)
                         }
                     }
                 }

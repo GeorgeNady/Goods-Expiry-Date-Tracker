@@ -1,11 +1,16 @@
 package com.george.goodsexpirydatetracker.ui.main.fragments
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
@@ -17,6 +22,7 @@ import com.george.goodsexpirydatetracker.databinding.FragmentBarCodeBinding
 import com.george.goodsexpirydatetracker.models.Commodity
 import com.george.goodsexpirydatetracker.ui.main.MainActivity
 import com.george.goodsexpirydatetracker.ui.main.MainViewModel
+import com.george.goodsexpirydatetracker.utiles.AlarmReceiver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +36,10 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
 
     override val TAG: String get() = this.javaClass.name
     private val viewModel: MainViewModel by lazy { (activity as MainActivity).viewModel }
+
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
+
     private lateinit var codeScanner: CodeScanner
 
     override fun initialization() {
@@ -92,6 +102,11 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
             } else {
                 insertCommodity(commodity)
                 Toast.makeText(requireContext(), "item added to the list", Toast.LENGTH_SHORT).show()
+                val _6H = 21600000L
+                val _12H = 43200000L
+                val _18H = 64800000L
+                val _24H = 86400000L
+                setAlarmManager((commodity.expiryDate!! * 1000),_6H)
                 findNavController().navigateUp()
             }
         } catch (e:Exception) {
@@ -138,5 +153,11 @@ class BarCodeScannerFragment : BaseFragment<FragmentBarCodeBinding>() {
         }
     }
 
-
+    private fun setAlarmManager(timeInMillis:Long,interval:Long) {
+        alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(requireActivity(), AlarmReceiver::class.java)
+        pendingIntent = PendingIntent.getBroadcast(requireContext(),0,intent,0)
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,timeInMillis,interval,pendingIntent)
+        Log.d(TAG, "setAlarmManager: alarm set")
+    }
 }
