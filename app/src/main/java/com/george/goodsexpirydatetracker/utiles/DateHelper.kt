@@ -15,7 +15,7 @@ class DateHelper(val long: Long) {
 
 
     fun timestampConverter(): String {
-        val stamp = Timestamp(long * 1000)
+        val stamp = Timestamp(long)
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val date = Date(stamp.time)
         return sdf.format(date)
