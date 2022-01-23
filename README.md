@@ -26,11 +26,23 @@
 <h1 align="center">How To Get Started</h1>
 
 * first: I have been used `https://mockapi.io` for createing a simulation for the api 
-* second: you can find below the postman collection to the mockup apis that used to simulate the Goods
+
+* you can find below the postman collection to the mockup apis that used to simulate the Goods
   data in some store repository you can:
   ```
   https://www.getpostman.com/collections/29fc332f2bf204aad384
   ```
+* or you can hit this api below to get all items that stored in the fake repo:
+  ```
+  https://61eb3ca87ec58900177cdbe1.mockapi.io/api/v1/repository/commidity
+  ```
+  
+* you can use this link to generate a BarCode that hold the __item id__
+  ```
+  https://barcode.tec-it.com/en
+  ```
+
+* then go to __BarCodeScanner__ screen to read it samply to add that new item into a local database 
 ---
 <h1 align="center">Fake Data</h1>
 
