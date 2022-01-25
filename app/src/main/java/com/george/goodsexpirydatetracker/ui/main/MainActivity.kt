@@ -1,19 +1,16 @@
 package com.george.goodsexpirydatetracker.ui.main
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.george.goodsexpirydatetracker.R
 import com.george.goodsexpirydatetracker.base.BaseActivity
 import com.george.goodsexpirydatetracker.databinding.ActivityMainBinding
+import com.george.goodsexpirydatetracker.services.AppForegroundService
 import com.george.goodsexpirydatetracker.utiles.AlarmReceiver
 import com.george.goodsexpirydatetracker.utiles.Constants.CHANNEL_DESCRIPTION
 import com.george.goodsexpirydatetracker.utiles.Constants.CHANNEL_ID
@@ -39,6 +36,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     override fun initialization() {
         createNotificationChannel()
+        if (!isServiceRunning()) {
+            startService()
+        }
     }
 
     override fun setListener() {
@@ -46,9 +46,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             viewModel.getAllItemsFromRemoteDataSource()
             viewModel.remoteDataSource.observe(this@MainActivity) { res ->
                 res.handler(
-                    loading = {showProgressBar()},
-                    error = {hideProgressBar()},
-                    failed = {hideProgressBar()},
+                    loading = { showProgressBar() },
+                    error = { hideProgressBar() },
+                    failed = { hideProgressBar() },
                 ) {
                     hideProgressBar()
                     runBlocking {
@@ -59,7 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                             val _12H = 43200000L
                             val _18H = 64800000L
                             val _24H = 86400000L
-                            setAlarmManager((c.expiryDate!!),_6H)
+                            setAlarmManager((c.expiryDate!!), _6H)
                         }
                     }
                 }
@@ -67,11 +67,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         }
     }
 
-    private fun setAlarmManager(timeInMillis:Long,interval:Long) {
+    private fun setAlarmManager(timeInMillis: Long, interval: Long) {
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this,AlarmReceiver::class.java)
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,timeInMillis,interval,pendingIntent)
+        val intent = Intent(this, AlarmReceiver::class.java)
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        alarmManager.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            timeInMillis,
+            interval,
+            pendingIntent
+        )
         Log.d(TAG, "setAlarmManager: alarm set")
     }
 
@@ -96,5 +101,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         progressBar.visibility = View.GONE
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////// service
+    private fun startService() {
+        val serviceIntent = Intent(this, AppForegroundService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(serviceIntent)
+        else startService(serviceIntent)
+    }
 
+    fun isServiceRunning(): Boolean {
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (serviceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
+            if (AppForegroundService.javaClass.name.equals(serviceInfo.service.className)) {
+                return true
+            }
+        }
+        return false
+    }
 }
